@@ -1,0 +1,109 @@
+<html>
+    <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hackathon</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav">
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#aboutus">About Us</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+
+ 
+
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div>
+                <h1>Turn Learning into Adventure!</h1>
+                <p>Play games, solve cases, and explore the world of law.</p>
+                <a href="#" class="cta-button">Start Your Legal Journey With Law Land </a>
+            </div>
+           
+        </section>
+    
+        <!-- Features Section -->
+        <section class="features" id="features">
+          <!-- <h2>How It Works</h2>-->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><span class="icon">🎮</span> Play Interactive Cases</h3>
+                    <p>● Be a child and learn laws in fun legal scenarios.</p>
+                    <button><a href="game1.html">START</a></button>
+                </div>
+                <div class="feature-card">
+                    <h3><span class="icon">⚖️</span> Solve Real-World Puzzles</h3>
+                    <p>● Learn how the law applies in everyday life.</p>
+                    <!--<button>START</button>-->
+                   <!-- <button id="startButton">START</button>-->
+    <div id="options">
+        <button onclick="location.href='puzzle.html'">Level 1</button>
+        <button onclick="location.href='puzzle2.html'">Level 2</button>
+    </div>
+                </div>
+               <!-- <div class="feature-card">
+                    <h3><span class="icon">🏆</span> Earn Rewards & Badges</h3>
+                    <p>● Climb the ranks from Junior Lawyer to Chief Justice!</p>
+                </div>-->
+            </div>
+        </section>
+
+                <!-- aboutus Section -->
+                <section class="aboutus" id="aboutus">
+                    <h2>About Us</h2>
+                    <div class="aboutus-grid">
+                        <div class="left">
+                            <p>Welcome to LawLand — where fun meets knowledge! <br>
+                                ● We believe that every child deserves to know their rights and understand the laws that protect them.</p>
+                                <p> 
+                                ● Our interactive games and engaging activities are designed to empower kids by teaching them about their legal rights in a playful and accessible way.
+                      </p>
+                            </div>
+
+                        <div class="right">
+                        <img src="lawland logo.png" alt="about us image" srcset="">
+                        </div>
+
+                        
+
+                        
+                    
+                    </div>
+                </section>
+                <!-- Contact Us Section -->
+<section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>Have questions or need help? Reach out to us!</p>
+    
+    <div class="contact-container">
+        <form action="#" method="POST">
+            <div class="input-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" rows="4" placeholder="Write your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
+    <script src="script.js"></script>
+    </body>
+    </html>
