@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Law Adventures - Word Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Full height of the viewport */
+      margin: 0;
+      background-color:#CCD1DB; /* Light background */
+    }
+
+    .container {
+      background-color:#EB7096; /* Light yellow background */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #puzzle {
+      display: grid;
+      grid-template-columns: repeat(10, 30px);
+      gap: 5px;
+      margin-top: 20px;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .highlight {
+      background-color: lightblue;
+    }
+
+    .found {
+      background-color: lightgreen;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      color: #333;
+    }
+
+    .explanation {
+      text-align: left;
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Law Adventures - Word Search</h1>
+    <p>Find the following legal terms:</p>
+    <ul>
+      <li><strong>ATTORNEY</strong></li>
+      <li><strong>BAIL</strong></li>
+      <li><strong>AFFIDAVIT</strong></li>
+      <li><strong>DEFENDANT</strong></li>
+      <li><strong>FIR</strong></li>
+    </ul>
+
+    <div id="puzzle"></div>
+
+    <!-- Explanations Section -->
+    <div class="explanation" id="explanation"></div>
+  </div>
+
+  <script>
+    const words = ['ATTORNEY', 'BAIL', 'AFFIDAVIT', 'DEFENDANT', 'FIR'];
+    const explanations = {
+      'ATTORNEY': 'A person who practices law, representing clients in legal matters.',
+      'BAIL': 'A sum of money that an accused person gives to a court to guarantee they will appear in court on their trial date.',
+      'AFFIDAVIT': 'A written or printed statement of facts sworn to before an authority.',
+      'DEFENDANT': 'A person who defends someone accused of a crime in court.',
+      'FIR': 'A written document prepared by the police when they receive information about a cognizable offense.'
+    };
+
+    const gridSize = 10;
+    const puzzle = [
+      ['A', 'T', 'T', 'O', 'R', 'N', 'E', 'Y', 'A', 'B'],
+      ['B', 'A', 'I', 'U', 'P', 'X', 'A', 'R', 'T', 'S'],
+      ['C', 'A', 'N', 'S', 'T', 'F', 'T', 'U', 'T', 'I'],
+      ['D', 'F', 'I', 'R', 'B', 'I', 'B', 'R', 'M', 'N'],
+      ['D', 'D', 'B', 'L', 'A', 'R', 'O', 'F', 'S', 'I'],
+      ['D', 'E', 'F', 'E', 'N', 'D', 'A', 'N', 'T', 'U'],
+      ['E', 'H', 'F', 'G', 'I', 'A', 'N', 'O', 'D', 'R'],
+      ['G', 'A', 'F', 'F', 'I', 'D', 'A', 'V', 'I', 'T'],
+      ['C', 'O', 'N', 'S', 'T', 'I', 'T', 'U', 'T', 'R'],
+      ['C', 'C', 'A', 'A', 'V', 'M', 'B', 'X', 'D', 'J']
+    ];
+
+    const puzzleContainer = document.getElementById('puzzle');
+    const explanationContainer = document.getElementById('explanation');
+
+    // Create the puzzle grid
+    function createPuzzle() {
+      puzzleContainer.innerHTML = '';  // Clear any existing puzzle
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.textContent = puzzle[i][j];
+          cell.addEventListener('click', () => selectCell(cell, i, j));
+          cell.addEventListener('dblclick', () => deselectCell(cell, i, j));
+          puzzleContainer.appendChild(cell);
+        }
+      }
+    }
+
+    let selectedCells = [];
+
+    // Handle cell selection and word matching
+    function selectCell(cell, row, col) {
+      // Prevent adding the same cell again if already selected
+      if (selectedCells.includes(cell)) return;
+
+      selectedCells.push({ cell, row, col });
+      cell.classList.add('highlight');
+
+      // Check if the selected word is correct
+      if (selectedCells.length > 1) {
+        checkWord();
+      }
+    }
+
+    // Handle cell deselection on double click
+    function deselectCell(cell) {
+      // Remove the cell from selectedCells if it exists
+      const index = selectedCells.findIndex((item) => item.cell === cell);
+      if (index !== -1) {
+        selectedCells.splice(index, 1);
+        cell.classList.remove('highlight'); // Remove highlight
+      }
+    }
+
+    // Function to check if the selected word is correct
+    function checkWord() {
+      const selectedLetters = selectedCells.map((item) => item.cell.textContent).join('');
+      
+      // Loop through all words to check if the selected letters match any word
+      const foundWord = words.find(word => word === selectedLetters);
+
+      if (foundWord) {
+        // If it's a correct word, change the color of the selected word
+        selectedCells.forEach((item) => item.cell.classList.add('found'));
+
+        // Show the explanation for the found word
+        showExplanation(foundWord);
+
+        // Reset selected cells to look for new words
+        selectedCells = [];
+      }
+    }
+
+    // Show the explanation of the found word
+    function showExplanation(word) {
+      explanationContainer.textContent = explanations[word];
+      explanationContainer.style.display = 'block';  // Make explanation visible
+    }
+
+    createPuzzle();  // Initialize the puzzle
+  </script>
+</body>
+</html>
